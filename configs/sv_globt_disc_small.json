@@ -1,0 +1,535 @@
+{
+  "data": {
+    "clip_grid": true,
+    "clip_grid_pad": 4,
+    "crop_grid": true,
+    "density": {
+      "hull_image_blur_std": 1.0,
+      "hull_smooth_blur_std": 0.0,
+      "hull_threshold": 0.04,
+      "hull_volume_blur_std": 0.5,
+      "inflow": {
+        "active": true,
+        "height": "MAX",
+        "hull_height": 10
+      },
+      "initial_value": "HULL_TIGHT",
+      "max": 256.0,
+      "min": 0.0,
+      "scalarFlow_reconstruction": "data/ScalarFlow/sim_{sim:06d}/reconstruction/density_{frame:06d}.npz",
+      "scale": 2.5,
+      "synthetic_target_density_scale": 1.0,
+      "target": "data/ScalarFlow/sim_{sim:06d}/input/cam/imgsUnproc_{frame:06d}.npz",
+      "target_cam_ids": [
+        2
+      ],
+      "target_preproc": "data/ScalarFlow/sim_{sim:06d}/input/postprocessed/imgs_{frame:06d}.npz",
+      "target_scale": 1.5,
+      "target_threshold": 0.04,
+      "target_type": "RAW"
+    },
+    "discriminator": {
+      "crop_size": [
+        96,
+        96
+      ],
+      "frames": [
+        45,
+        145,
+        1
+      ],
+      "gamma_fake": [
+        0.5,
+        2
+      ],
+      "gamma_real": [
+        0.5,
+        2
+      ],
+      "real_res_down": 4,
+      "rotation_mode": "90",
+      "scale_fake": [
+        0.7,
+        1.4
+      ],
+      "scale_input_to_crop": false,
+      "scale_range": [
+        0.85,
+        1.15
+      ],
+      "scale_real": [
+        0.8,
+        1.8
+      ],
+      "scale_real_to_cam": true,
+      "simulations": [
+        0,
+        6
+      ],
+      "target_type": "RAW",
+      "target": "data/ScalarFlow/sim_{sim:06d}/input/cam/imgsUnproc_{frame:06d}.npz",
+      "target_preproc": "data/ScalarFlow/sim_{sim:06d}/input/postprocessed/imgs_{frame:06d}.npz"
+    },
+    "grid_size": 64,
+    "hull": "ROT",
+    "initial_buoyancy": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "load_sequence": null,
+    "load_sequence_pre_opt": false,
+    "rand_seed_global": 460585320,
+    "run_dirs": [],
+    "scalarFlow_frame_offset": -11,
+    "simulation": 0,
+    "start": 40,
+    "step": 2,
+    "stop": 100,
+    "velocity": {
+      "boundary": "CLAMP",
+      "init_mask": "HULL_TIGHT_NEXT",
+      "init_std": 0.1,
+      "initial_value": "RAND",
+      "load_step": 1,
+      "scalarFlow_reconstruction": "data/ScalarFlow/sim_{sim:06d}/reconstruction/velocity_{frame:06d}.npz"
+    }
+  },
+  "debug": {
+    "disc_dump_samples": false
+  },
+  "desc": "coupled reconstruction (main-opt) with gradient back-warping and 2x stronger discriminator",
+  "paths": {
+    "base": "reconstruction",
+    "group": "singleView"
+  },
+  "rendering": {
+    "allow_fused_rendering": true,
+    "allow_static_cameras": false,
+    "background": {
+      "color": [
+        0,
+        0.5,
+        1.0
+      ],
+      "type": "COLOR"
+    },
+    "blend_mode": "BEER_LAMBERT",
+    "filter_mode": "LINEAR",
+    "lighting": {
+      "ambient_intensity": 0.64,
+      "initial_intensity": 0.85,
+      "shadow_resolution": [
+        256,
+        196,
+        196
+      ]
+    },
+    "luma": [
+      0.2126,
+      0.7152,
+      0.0722
+    ],
+    "main_camera": {
+      "base_resolution": [
+        256,
+        1920,
+        1080
+      ],
+      "distance": 0.8,
+      "far": 1.3,
+      "fov": 40,
+      "near": 0.3,
+      "resolution_scale": 0.3333333333333333
+    },
+    "mip": {
+      "bias": 0.0,
+      "level": 4,
+      "mode": "LINEAR"
+    },
+    "monochrome": false,
+    "num_images": 24,
+    "sample_gradients": true,
+    "steps_per_cycle": 24,
+    "synthetic_target": {
+      "ambient_intensity": 0.64,
+      "blend_mode": "BEER_LAMBERT",
+      "filter_mode": "LINEAR",
+      "initial_intensity": 0.85
+    },
+    "target_cameras": {
+      "calibration_file": "scalaFlow_cameras.json",
+      "camera_ids": [
+        2,
+        1,
+        0,
+        4,
+        3
+      ],
+      "crop_frustum": false,
+      "crop_frustum_pad": 2
+    },
+    "velocity_scale": 1024
+  },
+  "title": "s0-f30-2_single-view_disc_half-res",
+  "training": {
+    "density": {
+      "camera_jitter": false,
+      "discriminator_loss": {
+        "base": 2.0,
+        "max": 1.5e-05,
+        "min": 0,
+        "offset": 50,
+        "scale": 1.0,
+        "start": 0,
+        "step": 3e-07,
+        "type": "LINEAR"
+      },
+      "error_functions": {
+        "hull": "SE",
+        "negative": "SE",
+        "preprocessed_target_loss": "SE",
+        "raw_target_loss": "SE",
+        "smoothness_loss": "SE",
+        "smoothness_loss_2": "SE",
+        "target_depth_smoothness_loss": "SE",
+        "temporal_smoothness_loss": "SE",
+        "warp_loss": "SE"
+      },
+      "grow": {
+        "factor": 1.2,
+        "intervals": [
+          400,
+          400,
+          400,
+          400,
+          400,
+          400,
+          400,
+          400
+        ],
+        "post_grow_actions": [],
+        "pre_grow_actions": []
+      },
+      "hull": 0.0,
+      "learning_rate": {
+        "base": 0.5,
+        "scale": 6.666666666666667e-05,
+        "start": 2.45,
+        "type": "exponential"
+      },
+      "main_warp_fwd": true,
+      "negative": 0.0,
+      "optim_beta": 0.9,
+      "pre_opt": {
+        "discriminator_loss": 0.0,
+        "first": {
+          "discriminator_loss": 0.0,
+          "hull": 0.0,
+          "iterations": 600,
+          "learning_rate": {
+            "base": 0.5,
+            "scale": 6.666666666666667e-05,
+            "start": 3.0,
+            "type": "exponential"
+          },
+          "negative": 0.0,
+          "preprocessed_target_loss": 0.0,
+          "raw_target_loss": 1.74e-05,
+          "smoothness_loss": 0.0,
+          "smoothness_loss_2": 0.0,
+          "smoothness_neighbours": 3,
+          "target_depth_smoothness_loss": 0.0,
+          "temporal_smoothness_loss": 0.0,
+          "warp_loss": 0.0
+        },
+        "hull": 0.0,
+        "inspect_gradients": 1,
+        "iterations": 600,
+        "learning_rate": {
+          "base": 0.5,
+          "scale": 0.0003333333333333333,
+          "start": 3.0,
+          "type": "exponential"
+        },
+        "negative": 0.0,
+        "preprocessed_target_loss": 0.0,
+        "raw_target_loss": 1.74e-05,
+        "seq_init": "WARP",
+        "smoothness_loss": 0.0,
+        "smoothness_loss_2": 0.0,
+        "smoothness_neighbours": 3,
+        "target_depth_smoothness_loss": 0.0,
+        "temporal_smoothness_loss": 0.0,
+        "warp_loss": 0.0
+      },
+      "pre_optimization": true,
+      "preprocessed_target_loss": 0.0,
+      "raw_target_loss": 1.74e-05,
+      "scale_render_grads_sharpness": 0.0,
+      "smoothness_loss": 0.0,
+      "smoothness_loss_2": 0.0,
+      "smoothness_neighbours": 3,
+      "target_depth_smoothness_loss": 0.0,
+      "temporal_smoothness_loss": 0.0,
+      "use_hull": true,
+      "view_interpolation": {
+        "steps": 0
+      },
+      "warp_clamp": "MC_SMOOTH",
+      "warp_gradients": {
+        "active": true,
+        "decay": 0.9,
+        "update_first_only": true,
+        "weight": 1.0
+      },
+      "warp_loss": [
+        2.68e-10,
+        2.68e-10,
+        5.36e-10,
+        1.34e-13,
+        2000
+      ]
+    },
+    "discriminator": {
+      "activation": "lrelu",
+      "activation_alpha": 0.2,
+      "active": true,
+      "cam_res_down": 6,
+      "conditional_hull": false,
+      "fake_camera_jitter": false,
+      "grow": {
+        "factor": 2.0,
+        "intervals": []
+      },
+      "history": {
+        "keep_chance": 0.06,
+        "load": null,
+        "reset_on_density_grow": true,
+        "samples": 4,
+        "save": false,
+        "sequence_reuse": true,
+        "size": 800
+      },
+      "kernel_size": 4,
+      "layers": [
+        16,
+        16,
+        24,
+        24,
+        32,
+        32,
+        32,
+        64,
+        64,
+        64,
+        16,
+        4
+      ],
+      "learning_rate": 0.0002,
+      "loss_type": "RaLSGAN",
+      "model": null,
+      "noise_std": 0.0,
+      "num_fake": 4,
+      "num_real": 8,
+      "optim_beta": 0.5,
+      "padding": "MIRROR",
+      "pre_opt": {
+        "first": {
+          "learning_rate": {
+            "base": 0.5,
+            "scale": 0.00013333333333333334,
+            "start": 0.0004,
+            "type": "exponential"
+          },
+          "regularization": 0.002,
+          "train": false
+        },
+        "learning_rate": 0.00016,
+        "regularization": 0.002,
+        "train": false
+      },
+      "regularization": 0.002,
+      "start_delay": 0,
+      "steps": 1,
+      "stride": [
+        2,
+        1,
+        2,
+        1,
+        2,
+        1,
+        1,
+        2,
+        1,
+        1,
+        1,
+        1
+      ],
+      "target_label": 1.0,
+      "temporal_input": {
+        "active": false,
+        "step_range": [
+          0,
+          4,
+          1
+        ]
+      },
+      "train": true,
+      "use_fc": false
+    },
+    "frame_order": "BWD",
+    "iterations": 4200,
+    "light": {
+      "learning_rate": {
+        "base": 1,
+        "scale": 0,
+        "start": 0.001,
+        "type": "exponential"
+      },
+      "max": 6.0,
+      "min": 0.01,
+      "optim_beta": 0.9,
+      "optimize": false
+    },
+    "loss_active_eps": 1e-18,
+    "optimize_buoyancy": false,
+    "resource_device": "/cpu:0",
+    "summary_interval": 200,
+    "train_res_down": 6,
+    "velocity": {
+      "cossim_loss": 0.0,
+      "density_warp_loss": 4.1000000000000003e-10,
+      "divergence_loss": {
+        "base": 1.2,
+        "max": Infinity,
+        "min": -Infinity,
+        "offset": 0,
+        "scale": 0.0025,
+        "start": 2.58e-09,
+        "step": 0,
+        "type": "EXPONENTIAL"
+      },
+      "divergence_normalize": 0.0,
+      "error_functions": {
+        "density_warp_loss": "SE",
+        "divergence_loss": "SE",
+        "magnitude_loss": "SE",
+        "velocity_warp_loss": "SE"
+      },
+      "grow": {
+        "factor": 1.2,
+        "intervals": [
+          400,
+          400,
+          400,
+          400,
+          400,
+          400,
+          400,
+          400
+        ],
+        "scale_magnitude": true
+      },
+      "learning_rate": {
+        "base": 0.5,
+        "scale": 6.666666666666667e-05,
+        "start": 0.02,
+        "type": "exponential"
+      },
+      "magnitude_loss": 0.0,
+      "noise_std": {
+        "base": 2.0,
+        "max": Infinity,
+        "min": -Infinity,
+        "offset": 0,
+        "scale": 1.0,
+        "start": 0.0,
+        "step": 0,
+        "type": "CONST"
+      },
+      "optim_beta": 0.9,
+      "pre_opt": {
+        "cossim_loss": 0.0,
+        "density_warp_loss": 4.1000000000000003e-10,
+        "divergence_loss": 2.58e-09,
+        "first": {
+          "cossim_loss": 0.0,
+          "density_warp_loss": 4.1000000000000003e-10,
+          "divergence_loss": {
+            "base": 1.2,
+            "max": Infinity,
+            "min": -Infinity,
+            "offset": 0,
+            "scale": 0.001,
+            "start": 8.6e-10,
+            "step": 0,
+            "type": "EXPONENTIAL"
+          },
+          "grow": {
+            "factor": 1.2,
+            "intervals": [
+              1000,
+              1000,
+              1000,
+              1000
+            ],
+            "scale_magnitude": true
+          },
+          "iterations": 6000,
+          "learning_rate": 0.04,
+          "magnitude_loss": 0.0,
+          "smoothness_loss": 0.0,
+          "smoothness_neighbours": 3,
+          "velocity_warp_loss": 0.0
+        },
+        "grow": {
+          "factor": 1.2,
+          "intervals": [],
+          "scale_magnitude": true
+        },
+        "iterations": 600,
+        "learning_rate": 0.02,
+        "magnitude_loss": 0.0,
+        "seq_init": "WARP",
+        "smoothness_loss": 0.0,
+        "smoothness_neighbours": 3,
+        "velocity_warp_loss": 0.0
+      },
+      "pre_optimization": true,
+      "smoothness_loss": 0.0,
+      "smoothness_neighbours": 3,
+      "velocity_warp_loss": {
+        "base": 2.0,
+        "max": 8.1e-11,
+        "min": 4.05e-11,
+        "offset": 0,
+        "scale": 1.0,
+        "start": 4.05e-11,
+        "step": 8.1e-15,
+        "type": "LINEAR"
+      },
+      "warp_clamp": "MC_SMOOTH",
+      "warp_gradients": {
+        "active": false,
+        "decay": 0.9,
+        "weight": 1.0
+      },
+      "warp_order": 2
+    }
+  },
+  "validation": {
+    "cmp_scalarFlow": false,
+    "cmp_scalarFlow_render": false,
+    "output_interval": 100,
+    "render_cycle": false,
+    "render_cycle_steps": 8,
+    "render_density": true,
+    "render_shadow": true,
+    "render_target": true,
+    "render_velocity": true,
+    "stats": true,
+    "warp_test": false,
+    "warp_test_render": false
+  }
+}

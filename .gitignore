@@ -1,0 +1,29 @@
+**/__pycache__
+
+# build files
+**/[Bb]uild*
+*.o
+*.so
+*.dll
+
+# tests and outputs
+/data
+/reconstruction
+/evaluation
+*.npz
+*.png
+*.jpg
+*.jpeg
+*.exr
+*.svg
+*.mp4
+*.zip
+*.7z
+*.gz
+*.tar
+*.out
+
+
+#configuration
+
+# misc
