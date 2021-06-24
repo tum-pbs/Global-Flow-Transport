@@ -67,7 +67,14 @@ Left: multi-view, right: single-view.
 
 ## Citation
 ```
-tba
+@InProceedings{Franz_2021_CVPR,
+    author    = {Franz, Erik and Solenthaler, Barbara and Thuerey, Nils},
+    title     = {Global Transport for Fluid Reconstruction With Learned Self-Supervision},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+    month     = {June},
+    year      = {2021},
+    pages     = {1632-1642}
+}
 ```
 
 ## Acknowledgements
