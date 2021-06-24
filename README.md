@@ -1,6 +1,6 @@
 # Global Transport for Fluid Reconstruction with Learned Self-Supervision
 
-This repository is the official implementation of [Global Transport for Fluid Reconstruction with Learned Self-Supervision](https://arxiv.org/abs/2104.06031) ([Project Website](https://ge.in.tum.de/publications/2021-franz-globtrans/)). 
+This repository is the official implementation of [Global Transport for Fluid Reconstruction with Learned Self-Supervision](https://openaccess.thecvf.com/content/CVPR2021/html/Franz_Global_Transport_for_Fluid_Reconstruction_With_Learned_Self-Supervision_CVPR_2021_paper.html) ([Project Website](https://ge.in.tum.de/publications/2021-franz-globtrans/), [arXiv](https://arxiv.org/abs/2104.06031)). 
 
 ![Overview Image](images/teaser.PNG)  
 *Abstract*  
